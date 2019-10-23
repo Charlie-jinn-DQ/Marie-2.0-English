@@ -54,15 +54,15 @@ def gban(bot: Bot, update: Update, args: List[str]):
         return
 
     if int(user_id) in SUDO_USERS:
-        message.reply_text("I spy, with my little eye... a sudo user war! Why are you guys turning on each other?")
+        message.reply_text("Sudo vs. Sudo🤔 Why are you guys turning on each other?")
         return
 
     if int(user_id) in SUPPORT_USERS:
-        message.reply_text("OOOH someone's trying to gban a support user! *grabs popcorn*")
+        message.reply_text("WTF!, Sudo user is banning a Support User *grabs popcorn*")
         return
 
     if user_id == bot.id:
-        message.reply_text("-_- So funny, lets gban myself why don't I? Nice try.")
+        message.reply_text("-_- So funny, letme gban myself why don't I? Nice try. I'm boss here, you're not")
         return
 
     try:
@@ -77,21 +77,21 @@ def gban(bot: Bot, update: Update, args: List[str]):
 
     if sql.is_user_gbanned(user_id):
         if not reason:
-            message.reply_text("This user is already gbanned; I'd change the reason, but you haven't given me one...")
+            message.reply_text("This user is already gbanned; No reason was given, otherwise it would have been updated...")
             return
 
         old_reason = sql.update_gban_reason(user_id, user_chat.username or user_chat.first_name, reason)
         if old_reason:
             message.reply_text("This user is already gbanned, for the following reason:\n"
                                "<code>{}</code>\n"
-                               "I've gone and updated it with your new reason!".format(html.escape(old_reason)),
+                               "I've updated it with your new reason!".format(html.escape(old_reason)),
                                parse_mode=ParseMode.HTML)
         else:
-            message.reply_text("This user is already gbanned, but had no reason set; I've gone and updated it!")
+            message.reply_text("This user is already gbanned, but no reason was given; I've updated it now!")
 
         return
 
-    message.reply_text("⚡️ *Snaps the Banhammer* ⚡️")
+    message.reply_text("🖕 *Shows the middle finger* 🖕")
 
     banner = update.effective_user  # type: Optional[User]
     send_to_list(bot, SUDO_USERS + SUPPORT_USERS,
@@ -122,15 +122,15 @@ def gban(bot: Bot, update: Update, args: List[str]):
             if excp.message in GBAN_ERRORS:
                 pass
             else:
-                message.reply_text("Could not gban due to: {}".format(excp.message))
-                send_to_list(bot, SUDO_USERS + SUPPORT_USERS, "Could not gban due to: {}".format(excp.message))
+                message.reply_text("Could not Gban due to: {}".format(excp.message))
+                send_to_list(bot, SUDO_USERS + SUPPORT_USERS, "Could not Gban due to: {}".format(excp.message))
                 sql.ungban_user(user_id)
                 return
         except TelegramError:
             pass
 
     send_to_list(bot, SUDO_USERS + SUPPORT_USERS, 
-                  "{} has been successfully gbanned!".format(mention_html(user_chat.id, user_chat.first_name)),
+                  "{} has been successfully Gbanned!".format(mention_html(user_chat.id, user_chat.first_name)),
                 html=True)
     message.reply_text("Person has been gbanned.")
 
@@ -155,7 +155,7 @@ def ungban(bot: Bot, update: Update, args: List[str]):
 
     banner = update.effective_user  # type: Optional[User]
 
-    message.reply_text("I pardon {}, globally with a second chance.".format(user_chat.first_name))
+    message.reply_text("I'm giving you another chance {}, Don't do anything stupid now".format(user_chat.first_name))
 
     send_to_list(bot, SUDO_USERS + SUPPORT_USERS,
                  "<b>Regression of Global Ban</b>" \
@@ -206,7 +206,7 @@ def gbanlist(bot: Bot, update: Update):
     banned_users = sql.get_gban_list()
 
     if not banned_users:
-        update.effective_message.reply_text("There aren't any gbanned users! You're kinder than I expected...")
+        update.effective_message.reply_text("There aren't any gbanned users! You're kind than I expected...")
         return
 
     banfile = 'Screw these guys.\n'
@@ -225,7 +225,7 @@ def check_and_ban(update, user_id, should_message=True):
     if sql.is_user_gbanned(user_id):
         update.effective_chat.kick_member(user_id)
         if should_message:
-            update.effective_message.reply_text("This is a bad person, they shouldn't be here!")
+            update.effective_message.reply_text("Let's kick his ASS")
 
 
 @run_async
