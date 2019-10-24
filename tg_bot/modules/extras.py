@@ -270,6 +270,7 @@ __help__ = """
 
 __mod_name__ = "Extras"
 
+ABUSE_HANDLER = DisableAbleCommandHandler("abuse", abuse)
 ROLL_HANDLER = DisableAbleCommandHandler("roll", roll)
 TOSS_HANDLER = DisableAbleCommandHandler("toss", toss)
 SHRUG_HANDLER = DisableAbleCommandHandler("shrug", shrug)
